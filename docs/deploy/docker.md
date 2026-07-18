@@ -31,7 +31,7 @@ cd nytab
 
 ## 2. (可选)自定义端口与数据库账号
 
-仓库自带的 `docker-compose.yml` 默认占用宿主机 80 端口,数据库账号为 `nytab / nytab / nytab`。
+仓库自带的 `docker-compose.yml` 默认占用宿主机 **6725** 端口(映射到容器内 Nginx 的 80),数据库账号为 `nytab / nytab / nytab`。
 
 如需修改,编辑 `docker-compose.yml`:
 
@@ -41,7 +41,7 @@ cd nytab
 services:
   nytab-web:
     ports:
-      - "8080:80"   # 改为 8080:80 即可通过 http://localhost:8080 访问
+      - "8080:80"   # 例如改为 8080:80 即可通过 http://localhost:8080 访问
 ```
 
 ### 修改数据库账号
@@ -90,7 +90,7 @@ docker compose ps
 NAME       IMAGE               STATUS                    PORTS
 nytab-db   postgres:16-alpine  Up 30 seconds (healthy)   5432/tcp
 nytab-php  nytab-php           Up 30 seconds             9000/tcp
-nytab-web  nginx:alpine        Up 30 seconds             0.0.0.0:80->80/tcp
+nytab-web  nginx:alpine        Up 30 seconds             0.0.0.0:6725->80/tcp
 ```
 
 ## 5. 访问安装向导
@@ -163,8 +163,8 @@ docker run --rm -v nytab_uploads:/data -v "$PWD":/backup alpine \
 
 ### 端口冲突
 
-启动时报 `Bind for 0.0.0.0:80 failed: port is already allocated`,表示 80 端口被占用。
-解决方法:编辑 `docker-compose.yml`,把 `nytab-web.ports` 改为 `"8080:80"` 等空闲端口,或停掉占用 80 端口的进程。
+启动时报 `Bind for 0.0.0.0:6725 failed: port is already allocated`,表示 6725 端口被占用。
+解决方法:编辑 `docker-compose.yml`,把 `nytab-web.ports` 改为 `"8080:80"` 等空闲端口,或停掉占用 6725 端口的进程。
 
 ### 权限问题
 

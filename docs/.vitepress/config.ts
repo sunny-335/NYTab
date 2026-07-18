@@ -6,6 +6,9 @@ export default defineConfig({
   description: '多功能标签页与个人效率工作台',
   lastUpdated: true,
   cleanUrls: true,
+  ignoreDeadLinks: [
+    /^https?:\/\/localhost/,
+  ],
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },

@@ -26,7 +26,7 @@ cd NYTab
 docker compose up -d
 ```
 
-访问 `http://localhost` → 跟随安装向导完成配置(数据库默认账号 `nytab/nytab/nytab`,主机填 `nytab-db`)。
+访问 `http://localhost:6725` → 跟随安装向导完成配置(数据库默认账号 `nytab/nytab/nytab`,主机填 `nytab-db`)。
 
 ### 手动部署
 

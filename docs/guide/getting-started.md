@@ -34,7 +34,7 @@ docker compose up -d
 
 ### 3. 访问安装向导
 
-浏览器打开 [http://localhost](http://localhost),系统会自动跳转到安装向导 `/setup`。
+浏览器打开 [http://localhost:6725](http://localhost:6725),系统会自动跳转到安装向导 `/setup`。
 
 在安装向导中填入数据库信息,**默认值已经预填好**(对应 `docker-compose.yml` 中的环境变量):
 

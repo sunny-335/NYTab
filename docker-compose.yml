@@ -66,7 +66,7 @@ services:
     depends_on:
       - nytab-php
     ports:
-      - "80:80"
+      - "6725:80"
     volumes:
       - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       # nginx 直接读取 PHP 容器同步过来的前端产物
