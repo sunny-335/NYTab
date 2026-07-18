@@ -1,0 +1,57 @@
+# =============================================================================
+# Docker 构建上下文忽略清单
+# =============================================================================
+# 减小构建上下文体积 + 避免污染镜像。仅 Stage 1(前端构建)需要源码,
+# Stage 2 仅 COPY backend/,因此可放心忽略大量无关文件。
+# =============================================================================
+
+# --- Node / 前端 ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# --- PHP / 后端运行时产物 ---
+backend/vendor/
+backend/storage/*.sqlite
+backend/storage/*.sqlite-*
+backend/config/installed.lock
+
+# --- 文档构建产物 ---
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# --- 版本控制与 IDE ---
+.git/
+.gitignore
+.vscode/
+.idea/
+.trae/
+.DS_Store
+
+# --- 日志 ---
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- 环境变量(由 docker-compose environment 注入,不入镜像) ---
+.env
+.env.*
+!.env.example
+
+# --- Docker 自身(避免递归)
+# 注意:Dockerfile 仍需 COPY docker/php-entrypoint.sh,故不能整体排除 docker/。
+# 仅排除 docker 中不需要进入镜像的 nginx.conf(它通过 compose 卷挂载)。
+Dockerfile
+docker-compose.yml
+.dockerignore
+docker/nginx.conf
+
+# --- 部署配置(传统裸机部署用,Docker 场景使用 docker/ 内的版本) ---
+deploy/
+
+# --- 测试与脚本 ---
+tests/
+tests/*.sh

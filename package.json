@@ -1,0 +1,33 @@
+{
+  "name": "nytab",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "dependencies": {
+    "axios": "^1.18.1",
+    "lodash-es": "^4.18.1",
+    "pinia": "^4.0.2",
+    "vue": "^3.5.39",
+    "vue-devui": "^1.6.36",
+    "vue-router": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^24.13.2",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/tsconfig": "^0.9.1",
+    "esbuild": "^0.28.1",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.1",
+    "vitepress": "^1.6.4",
+    "vue-tsc": "^3.3.5"
+  }
+}

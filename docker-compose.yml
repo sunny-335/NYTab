@@ -1,0 +1,83 @@
+# =============================================================================
+# NYTab 一键部署:docker compose up -d
+# =============================================================================
+# 三个服务:
+#   nytab-db   PostgreSQL 16 数据库
+#   nytab-php  PHP-FPM 8.2 后端(自定义构建,内嵌前端 dist)
+#   nytab-web  Nginx 反代 + 前端 SPA 静态托管
+#
+# 持久化卷:
+#   nytab-pgdata  数据库数据
+#   uploads       用户上传的图标/品牌资源(PHP 写、Nginx 读)
+#   storage       SQLite(开发者模式)/日志
+#   frontend-dist 前端 dist 共享卷(PHP entrypoint 写、Nginx 读)
+#   app-config    安装锁 installed.lock 与 .env(经符号链接)持久化,
+#                 确保 JWT_SECRET / DB 凭据在容器重启后不丢失
+#
+# 默认数据库账号:nytab / nytab / nytab(仅适用于内网/演示,生产请修改)
+# =============================================================================
+
+services:
+  nytab-db:
+    image: postgres:16-alpine
+    container_name: nytab-db
+    environment:
+      POSTGRES_USER: nytab
+      POSTGRES_PASSWORD: nytab
+      POSTGRES_DB: nytab
+    volumes:
+      - nytab-pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nytab"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  nytab-php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nytab-php
+    depends_on:
+      nytab-db:
+        condition: service_healthy
+    volumes:
+      - uploads:/var/www/html/uploads
+      - storage:/var/www/html/storage
+      # config 卷持久化 installed.lock 与 .env(entrypoint 将 .env 符号链接到此),
+      # 确保 JWT_SECRET、安装状态在容器重启后保留
+      - app-config:/var/www/html/config
+      # PHP 容器将内嵌的 dist 同步到此共享卷,供 nginx 容器读取
+      - frontend-dist:/srv/frontend-dist
+    restart: unless-stopped
+    environment:
+      APP_ENV: production
+      # 覆盖 backend/.env 默认值(Env::get 优先读取 OS 环境变量)
+      DB_HOST: nytab-db
+      DB_PORT: "5432"
+      DB_NAME: nytab
+      DB_USER: nytab
+      DB_PASSWORD: nytab
+
+  nytab-web:
+    image: nginx:alpine
+    container_name: nytab-web
+    depends_on:
+      - nytab-php
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      # nginx 直接读取 PHP 容器同步过来的前端产物
+      - frontend-dist:/usr/share/nginx/html:ro
+      # nginx 需要直接 serve /uploads/* 静态文件(图标等),与 PHP 共享卷
+      - uploads:/var/www/html/uploads:ro
+    restart: unless-stopped
+
+volumes:
+  nytab-pgdata:
+  uploads:
+  storage:
+  frontend-dist:
+  app-config:

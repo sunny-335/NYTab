@@ -1,0 +1,9 @@
+vendor/
+.env
+config/installed.lock
+uploads/icons/*
+!uploads/icons/.gitkeep
+uploads/branding/*
+!uploads/branding/.gitkeep
+uploads/backgrounds/*
+!uploads/backgrounds/.gitkeep

@@ -1,0 +1,54 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+backend/vendor
+
+# Build output
+dist
+dist-ssr
+docs/.vitepress/dist
+docs/.vitepress/cache
+
+# Runtime config & secrets
+.env
+.env.*
+!.env.example
+!backend/.env.example
+!backend/config/env.example.php
+*.local
+installed.lock
+config/installed.lock
+
+# Developer-mode SQLite databases
+backend/storage/*.sqlite
+backend/storage/*.sqlite-*
+
+# Runtime uploads (keep directory structure via .gitkeep)
+backend/uploads/icons/*
+!backend/uploads/icons/.gitkeep
+backend/uploads/branding/*
+!backend/uploads/branding/.gitkeep
+backend/uploads/backgrounds/*
+!backend/uploads/backgrounds/.gitkeep
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# IDE internal
+.trae

@@ -1,0 +1,25 @@
+/**
+ * 自定义主题色:蓝色 (#3b82f6)
+ * 覆盖 VitePress 默认的绿色品牌色
+ */
+:root {
+  --vp-c-brand-1: #3b82f6;
+  --vp-c-brand-2: #2563eb;
+  --vp-c-brand-3: #1d4ed8;
+  --vp-c-brand-soft: rgba(59, 130, 246, 0.14);
+}
+
+/**
+ * 首页 hero 按钮(brand 主题)使用蓝色
+ */
+:root {
+  --vp-button-brand-bg: #3b82f6;
+  --vp-button-brand-hover-bg: #2563eb;
+  --vp-button-brand-active-bg: #1d4ed8;
+  --vp-button-brand-border: #3b82f6;
+  --vp-button-brand-hover-border: #2563eb;
+  --vp-button-brand-active-border: #1d4ed8;
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-active-text: #ffffff;
+}

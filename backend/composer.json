@@ -1,0 +1,15 @@
+{
+  "name": "nytab/backend",
+  "type": "project",
+  "require": {
+    "php": ">=8.1",
+    "ext-pdo": "*",
+    "ext-pdo_pgsql": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Nytab\\": "src/"
+    }
+  }
+}
